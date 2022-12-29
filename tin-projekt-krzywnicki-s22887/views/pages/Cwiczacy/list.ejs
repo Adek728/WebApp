@@ -1,0 +1,32 @@
+
+    <%- include('../../fragments/headers.ejs') %>
+    <main>
+        <h2>Lista Ćwiczących</h2>
+        <table class="table-list">
+            <thead>
+                <tr>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let cw of cws) { %>
+                <tr>
+                    <td><%= cw.imie %></td>
+                    <td><%= cw.nazwisko %></td>
+                    <td>
+                        <ul class="list-actions">
+                            <li><a href="/cwiczacy/szczeg/<%=cw._id%>" class="list-actions-button-details">Szczegóły</a></li>
+                            <li><a href="/cwiczacy/edit/<%=cw._id%>" class="list-actions-button-edit">Edytuj</a></li>
+                            <li><a href="/cwiczacy/delete/<%=cw._id%>" class="list-actions-button-delete">Usuń</a></li>   
+                        </ul>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <p><a href="/Cwiczacy/add" class="button-add">Dodaj nowego ćwiczącego</a></p>
+    </main>
+
+    <%- include('../../fragments/footer.ejs') %>

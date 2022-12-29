@@ -1,0 +1,31 @@
+    
+    <%- include('../../fragments/headers.ejs') %>
+    <main>
+        <h2>Lista Treningów</h2>
+        <table class="table-list">
+            <thead>
+                <tr>
+                    <th>Strefa</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let tr of trening) { %>
+                    <tr>
+                        <td><%= tr.strefa %></td>
+                        <td>
+                            <ul class="list-actions">
+                                <li><a href="/trening/szczeg/<%=tr._id%>" class="list-actions-button-details">Szczegóły</a></li>
+                                <li><a href="/trening/edit/<%=tr._id%>" class="list-actions-button-edit">Edytuj</a></li>
+                                <li><a href="/trening/delete/<%=tr._id%>" class="list-actions-button-delete">Usuń</a></li>   
+                            </ul>
+                        </td>
+                    </tr>
+                    <% } %>
+
+            </tbody>
+        </table>
+        <p><a href="/trening/add" class="button-add">Dodaj nowy trening</a></p>
+    </main>
+
+    <%- include('../../fragments/footer.ejs') %>

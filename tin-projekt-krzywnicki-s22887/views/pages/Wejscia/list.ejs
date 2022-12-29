@@ -1,0 +1,38 @@
+<%- include('../../fragments/headers.ejs') %>
+
+
+
+    <main>
+        <h2>Lista Wejść</h2>
+        <table class="table-list">
+            <thead>
+                <tr>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Trening</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let we of wejscia) { %>
+                    <tr>
+                        <td><%= we.cwiczacy.imie %></td>
+                        <td><%= we.cwiczacy.nazwisko %></td>
+                        <td><%= we.trening.strefa %></td>
+                        <td>
+                            <ul class="list-actions">
+                                <li><a href="/wejscia/szczeg/<%=we._id%>" class="list-actions-button-details">Szczegóły</a></li>
+                                <li><a href="/wejscia/edit/<%=we._id%>" class="list-actions-button-edit">Edytuj</a></li>
+                                <li><a href="/wejscia/delete/<%=we._id%>" class="list-actions-button-delete">Usuń</a></li>   
+                            </ul>
+                        </td>
+                    </tr>
+                    <% } %>
+                <tr>
+                    
+            </tbody>
+        </table>
+        <p><a href="/wejscia/add" class="button-add">Dodaj nowego wejście</a></p>
+    </main>
+
+    <%- include('../../fragments/footer.ejs') %>

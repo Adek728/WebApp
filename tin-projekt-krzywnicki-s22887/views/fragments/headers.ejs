@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang ="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <title>TurboFit</title>
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head>
+<body>
+
+    <header>
+        <h1>TurboFit</h1>
+        <img src="/images/muscular-bodybuilder-with-clock-pngrepo-com.png" alt="a">
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/" class="<%= navLocation == 'main' ? 'active' : ''%>">Strona główna</a></li>
+            <li><a href="/Cwiczacy" class="<%= navLocation == 'cw' ? 'active' : ''%>">Ćwiczący</a></li>
+            <li><a href="/Wejscia" class="<%= navLocation == 'we' ? 'active' : ''%>">Wejścia</a></li>
+            <li><a href="/Trening" class="<%= navLocation == 'tr' ? 'active' : ''%>">Trening</a></li>
+        </ul>
+    </nav>

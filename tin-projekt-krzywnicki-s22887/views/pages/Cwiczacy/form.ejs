@@ -1,0 +1,98 @@
+<%- include('../../fragments/headers.ejs') %>formAc
+    <main>
+        <script type="application/javascript" src="/js/validationCwiForm.js"></script>
+        
+        <h2><%= pageTitle %></h2>
+        <form class="form" method="post" action="<%=formAction%>" novalidate>
+
+            <input type="hidden" name="_id" value="<%= cwiczacy._id%>">
+
+            <label for="Imie">Imię: <span class="symbol-required">*</span></label>
+            <input type="text" name="imie" id="imie" placeholder="2-60 znaków"  value="<%= cwiczacy.imie %>" class="<%= validationErrors.find(e => e.path.includes('imie')) ? 'error-input' : '' %>"
+            <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+            <span id="errorImie" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('imie'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('imie')).message %>
+                 <% } %>
+            </span>
+            
+
+            <label for="nazwisko">Naziwsko: <span class="symbol-required">*</span></label>
+            <input type="text" name="nazwisko" id="nazwisko" placeholder="2-60 znaków"  value="<%= cwiczacy.nazwisko%>" class="<%= validationErrors.find(e => e.path.includes('nazwisko')) ? 'error-input' : '' %>"
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>/>
+            <span id="errorNaziwsko" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('nazwisko'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('nazwisko')).message %>
+                 <% } %>
+            </span>
+            
+
+            <label for="wiek">Wiek: <span class="symbol-required">*</span></label>
+            <input type="number" name="wiek" id="wiek" placeholder="1-3 cyfry"  value="<%= cwiczacy.wiek%>" class="<%= validationErrors.find(e => e.path.includes('wiek')) ? 'error-input' : '' %>"
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>/>
+            <span id="errorWiek" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('wiek'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('wiek')).message %>
+                <% } %>
+            </span>
+            
+
+            <label for="pesel">Pesel: </label>
+            <input type="number" name="pesel" id="pesel" placeholder="11 cyfer" value="<%= cwiczacy.pesel %>"  
+            class="<%= validationErrors.find(e=>e.path.includes('pesel')) ? 'error-input' : '' %>"
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>/>   
+            <span id="errorPesel" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('pesel'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('pesel')).message %>
+                 <% } %>
+            </span>
+            
+
+            <% if (formMode == 'showDetails') { %>
+            <div>
+                <a href="/cwiczacy/edit/<%= cwiczacy._id %>" class="szczeg-button-edit">Edytuj</a>
+            </div>        
+            <% } %>
+            
+            
+            
+            <div class="form-buttons">
+                <p id="errorsSummary"></p>
+                <% if(formMode != 'showDetails') { %>
+                    <input type="submit" class="form-button-submit" value="<%=btnLabel%>"/>
+                    <a href="/Cwiczacy" class="form-button-cancel">Anuluj</a>
+                <% } else { %>
+                    <a href="/Cwiczacy" class="form-button-cancel">Powrót</a>
+                <% } %>    
+            </div>
+
+            
+
+        </form>
+        <% if (formMode == 'showDetails' || formMode == 'edit') { %>
+            <h2>Szczegóły Wejść</h2>
+            
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>Strefa</th>
+                        <th>Data Wejścia</th>
+                        <th>Cena Biletu</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <% for (let c of cwiczacy.wejscia) { %>
+                        <tr>
+                            <td><a href="/Trening/szczeg/<%= c.trening._id %>"><%= c.trening.strefa %></a></td>
+                            <td><%= c.dataWejscia %></td>
+                            <td><%= c.cena %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } %>
+    </main>
+
+    
+    <%- include('../../fragments/footer.ejs') %>

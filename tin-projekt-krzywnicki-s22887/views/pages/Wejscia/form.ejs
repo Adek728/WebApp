@@ -1,0 +1,109 @@
+<%- include('../../fragments/headers.ejs') %>
+
+    <main>
+        <script type="application/javascript" src="/js/validationWejForm.js"></script>
+        <h2><%= pageTitle %></h2>
+        <form class="form" method="post" action="<%=formAction%>" novalidate>
+
+            <input type="hidden" name="_id" value="<%= wejscia._id%>">
+
+            <label for="cw_id">Ćwiczący: <span class="symbol-required">*</span></label>
+            <select name="cw_id" id="cw_id" class="<%= validationErrors.find(e => e.path.includes('cw_id')) ? 'error-input' : '' %>"
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>>
+            <% if (formMode !='showDetails' ){ %>
+                <option value=""  selected>---Wybór Ćwiczącego---</option>
+            <% } %>
+                <% for (let i=0; i<allCwiczacy.length; i++) {let cwiczacy=allCwiczacy[i]; %>
+                    <option value="<%= cwiczacy._id %>" label="<%= cwiczacy.imie + ' ' + cwiczacy.nazwisko %>"
+                        <%=(wejscia._id && cwiczacy._id.toString()==wejscia.cwiczacy._id.toString()) ? 'selected' : ''%>>
+                    </option>
+                <% } %>
+            </select>
+            <span id="errorCwiczacy" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('cw_id'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('cw_id')).message %>
+                 <% } %>
+            </span>
+            
+
+            <label for="tre_id">Trening: <span class="symbol-required">*</span></label>
+            <select name="tre_id" id="tre_id"   class="<%= validationErrors.find(e => e.path.includes('tre_id')) ? 'error-input' : '' %>"
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>>
+                <% if (formMode !='showDetails' ){ %>
+                    <option value=""  selected>---Wybór Treningu---</option>
+                <% } %>
+                <% for (let i=0; i < allTrening.length; i++) { let trening = allTrening[i]; %>
+                    <option value="<%= trening._id %>" label="<%= trening.strefa %>"
+                        <%=( wejscia._id && trening._id.toString() == wejscia.trening._id.toString()) ? 'selected' : ''%>>
+                    </option>
+                <% } %>
+            </select>
+            <span id="errorTrening" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('tre_id'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('tre_id')).message %>
+                 <% } %>
+            </span>
+
+            <label for="cena">Cena: <span class="symbol-required">*</span></label>
+            <input type="number" name="cena" id="cena" placeholder="100-200"  value="<%= wejscia.cena %>" class="<%= validationErrors.find(e => e.path.includes('cena')) ? 'error-input' : '' %>"
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>/>
+            <span id="errorCena" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('cena'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('cena')).message %>
+                 <% } %>
+            </span>
+            
+            
+            <label for="dataWejscia">Data Wejścia: <span class="symbol-required">*</span></label>
+            <input type="date" name="dataWejscia" id="dataWejscia" value="<%= (formMode=='createNew') ? '': wejscia.dataWejscia %>"
+            class="<%= validationErrors.find(e => e.path.includes('dataWejscia')) ? 'error-input' : '' %>"
+            
+            <%= (formMode =='showDetails') ? 'disabled' : '' %>/>
+            <span id="errorData" class="error-text">
+                <% if (validationErrors.find(e => e.path.includes('dataWejscia'))) { %>
+                    <%= validationErrors.find(e => e.path.includes('dataWejscia')).message %>
+                 <% } %>
+            </span>
+            
+            <% if (formMode == 'showDetails') { %>
+                <div>
+                    <a href="/wejscia/edit/<%= wejscia._id %>" class="szczeg-button-edit">Edytuj</a>
+                </div>        
+                <% } %>
+            
+            
+            <div class="form-buttons">
+                <p id="errorsSummary"></p>
+                <% if(formMode != 'showDetails') { %>
+                    <input type="submit" class="form-button-submit" value="<%=btnLabel%>"/>
+                    <a href="/Wejscia" class="form-button-cancel">Anuluj</a>
+                <% } else { %>
+                    <a href="/Wejscia" class="form-button-cancel">Powrót</a>
+                <% } %>    
+            </div>
+            
+
+
+        </form>
+        <% if (formMode == 'showDetails' || formMode == 'edit') { %>
+            <h2>Szczegóły odbytych treningów</h2>
+            
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>Cwiczacy</th>
+                        <th>Trening</th>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td><a href="/Cwiczacy/szczeg/<%= wejscia.cwiczacy._id %>"><%= wejscia.cwiczacy.imie %></a></td>
+                        <td><a href="/Trening/szczeg/<%= wejscia.trening._id %>"><%= wejscia.trening.strefa %></a></td>
+                    </tr>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            <% } %>
+    </main>
+
+    <%- include('../../fragments/footer.ejs') %>
